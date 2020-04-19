@@ -2,6 +2,8 @@
   "name": "jump-gouache",
   "version": "1.0.0",
   "description": "Port of Guava jump consistent hash function",
+  "homepage": "https://github.com/bhoudu/jump-gouache",
+  "bugs": "https://github.com/bhoudu/jump-gouache/issues",
   "author": "Benjamin Houdu",
   "engines": {
     "node": ">= 0.10.0"
