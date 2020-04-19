@@ -21,9 +21,7 @@ This library is made with compatibility in mind, all used algorithms are standar
 Just import the function and start hashing. The basic consistentHash function accepts `number` and `bigint` values.
 
     import { consistentHash } from 'jump-gouache';
-    
-    // getting the index of the bucket to route the item of value 45645664
-    // there are 100 buckets    
+     
     const bucketIndexNumber = consistentHash(45645664, 100);
     const bucketIndexBigInt = consistentHash(BigInt('0xdeadbeef'), 100);
 
@@ -32,8 +30,6 @@ It is also possible to use a string as input, the hashing of the string into an 
 
     import { fnvConsistentHash } from 'jump-gouache';
         
-    // getting the index of the bucket to route the item of value 45645664
-    // there are 100 buckets    
     const bucketIndex32 = fnvConsistentHash('Text that will be hashed with FNV-1a into a 32 bit integer', 100);
     const bucketIndex64 = fnvConsistentHash('Text that will be hashed with FNV-1a into a 64 bit integer', 100);
 
