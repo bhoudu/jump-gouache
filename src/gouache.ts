@@ -58,7 +58,7 @@ export function consistentHash(input: number | bigint, bucketCount: number): num
   }
 }
 
-export enum FNVHashMode {
+export enum FNV1AHashMode {
   FNV1A_32, FNV1A_64
 }
 
@@ -74,14 +74,14 @@ export enum FNVHashMode {
 export function fnvConsistentHash(
   input: string,
   bucketCount: number,
-  mode: FNVHashMode = FNVHashMode.FNV1A_32,
+  mode: FNV1AHashMode = FNV1AHashMode.FNV1A_32,
 ): number {
   switch (mode) {
-    case FNVHashMode.FNV1A_64: {
+    case FNV1AHashMode.FNV1A_64: {
       const input64: string = fnv.fast1a64(input);
       return consistentHash(BigInt('0x' + input64), bucketCount);
     }
-    case FNVHashMode.FNV1A_32:
+    case FNV1AHashMode.FNV1A_32:
     default: {
       const input32: number = fnv.fast1a32(input);
       return consistentHash(input32, bucketCount);
