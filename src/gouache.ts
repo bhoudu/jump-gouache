@@ -11,7 +11,7 @@ const lcgDivisorConstant = new BigNumber('2147483648');
  * This is a port from guava java library, outputs are the same as in Guava.
  * Note that to be compatible, it is required internally to support bit-wise operations
  * on true 64-bit integers the library `long` enables this and is widely compatible.
- * To support 64-bit float values, the library `bignumber.js` as it is battle hardened.
+ * To support 64-bit float values, the library `bignumber.js` is used as it is battle hardened.
  *
  * See http://en.wikipedia.org/wiki/Linear_congruential_generator
  *
@@ -68,7 +68,7 @@ export enum FNVHashMode {
  *
  * @param input as a string
  * @param bucketCount as a positive integer to indicate how many buckets are valid to route inputs to
- * @param mode of FNV1a to use (hash the input into a 32 bit or 64 bit value) before using jump algorithm
+ * @param mode of FNV-1a to use (hash the input into a 32 bit or 64 bit value) before using jump algorithm
  */
 export function fnvConsistentHash(
   input: string,
