@@ -1,4 +1,4 @@
-import { consistentHash, fnvConsistentHash, FNVHashMode } from "./gouache";
+import { consistentHash, fnvConsistentHash, FNVHashMode, murmurConsistentHash } from './gouache';
 
 describe('hashingUtil', () => {
   const jumps = new Map([
@@ -8,9 +8,9 @@ describe('hashingUtil', () => {
     [BigInt('0x0ddc0ffeebadf00d'), [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 15, 15, 15, 15]],
   ]);
   const compatibilityTests = [
-    {input: 256, bucketCount: 1024, expected: 520},
-    {input: 1, bucketCount: 60, expected: 55},
-    {input: 2, bucketCount: 60, expected: 46},
+    { input: 256, bucketCount: 1024, expected: 520 },
+    { input: 1, bucketCount: 60, expected: 55 },
+    { input: 2, bucketCount: 60, expected: 46 },
   ];
 
   it('Test jump consistent hash function', () => {
@@ -30,9 +30,14 @@ describe('hashingUtil', () => {
   });
 
   it('Test jump consistent hash function with FNV1a', () => {
-    const index32 = fnvConsistentHash("gou4che4ftwuEQzP6SsUR89gbY2", 100, FNVHashMode.FNV1A_32);
+    const index32 = fnvConsistentHash('gou4che4ftwuEQzP6SsUR89gbY2', 100, FNVHashMode.FNV1A_32);
     expect(index32).toEqual(39);
-    const index64 = fnvConsistentHash("gou4che4ftwuEQzP6SsUR89gbY2", 100, FNVHashMode.FNV1A_64);
+    const index64 = fnvConsistentHash('gou4che4ftwuEQzP6SsUR89gbY2', 100, FNVHashMode.FNV1A_64);
     expect(index64).toEqual(69);
+  });
+
+  it('Test jump consistent hash function with MurmurHash3', () => {
+    const index32 = murmurConsistentHash('gou4che4ftwuEQzP6SsUR89gbY2', 100);
+    expect(index32).toEqual(46);
   });
 });

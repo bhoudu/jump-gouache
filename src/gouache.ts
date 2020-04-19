@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js';
-import fnv from 'fnv-plus';
 // @ts-ignore
 import Long from 'long';
+import fnv from 'fnv-plus';
+import murmurHash3 from 'murmurhash3js';
 
 const lcgConstant = Long.fromString('2862933555777941757');
 const lcgDivisorConstant = new BigNumber('2147483648');
@@ -73,7 +74,7 @@ export enum FNVHashMode {
 export function fnvConsistentHash(
   input: string,
   bucketCount: number,
-  mode: FNVHashMode = FNVHashMode.FNV1A_32
+  mode: FNVHashMode = FNVHashMode.FNV1A_32,
 ): number {
   switch (mode) {
     case FNVHashMode.FNV1A_64: {
@@ -86,4 +87,17 @@ export function fnvConsistentHash(
       return consistentHash(input32, bucketCount);
     }
   }
+}
+
+/**
+ * Jump consistent hash function based on a string input.
+ * As jump algorithm requires a 32 or 64 bit long integer, the string input is hashed thanks to MurmurHash3.
+ * It is easier to hash an object into a string in most cases, so this function helps.
+ *
+ * @param input as a string
+ * @param bucketCount as a positive integer to indicate how many buckets are valid to route inputs to
+ */
+export function murmurConsistentHash(input: string, bucketCount: number): number {
+  const input32: number = murmurHash3.x86.hash32(input);
+  return consistentHash(input32, bucketCount);
 }
