@@ -39,7 +39,7 @@ export function* lcg(seed: number | bigint): Generator<BigNumber> {
  * @param bucketCount as a positive integer to indicate how many buckets are valid to route inputs to
  * @return computed bucket index matched for given input
  */
-export function consistentHash(input: bigint | number, bucketCount: number): number {
+export function consistentHash(input: number | bigint, bucketCount: number): number {
   if (bucketCount < 1) {
     throw new Error(`Buckets must be positive: ${bucketCount}`);
   }
