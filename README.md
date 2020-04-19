@@ -28,10 +28,10 @@ Just import the function and start hashing. The basic consistentHash function ac
 It is also possible to use a string as input, the hashing of the string into an integer is made with `fnv-plus`.
 `FNV-1a` algorithm is very fast and designed for uniqueness.
 
-    import { fnvConsistentHash } from 'jump-gouache';
+    import { fnvConsistentHash, FNV1AHashMode } from 'jump-gouache';
         
     const bucketIndex32 = fnvConsistentHash('Text that will be hashed with FNV-1a into a 32 bit integer', 100);
-    const bucketIndex64 = fnvConsistentHash('Text that will be hashed with FNV-1a into a 64 bit integer', 100);
+    const bucketIndex64 = fnvConsistentHash('Text that will be hashed with FNV-1a into a 64 bit integer', 100, FNV1AHashMode.FNV1A_64);
 
 The 32 bit mode is the default mode, it is way faster than the 64 bit one. It all depends if you want to use a wider range of hashed values from strings.
 Wider range means more unique hashed integer values and better distribution from jump consistent hash at the expense of more computation due to more 64 bit operations.
