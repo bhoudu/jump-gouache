@@ -1,6 +1,6 @@
 {
   "name": "jump-gouache",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Port of Guava jump consistent hash function",
   "author": "Benjamin Houdu",
   "license": "BSD-3-Clause",
