@@ -1,4 +1,4 @@
-import { consistentHash } from "./gouache";
+import { consistentHash, fnvConsistentHash, FNVHashMode } from "./gouache";
 
 describe('hashingUtil', () => {
   const jumps = new Map([
@@ -15,5 +15,12 @@ describe('hashingUtil', () => {
         expect(computedBucket).toEqual(expected);
       });
     });
+  });
+
+  it('Test jump consistent hash function with FNV1a', () => {
+    const index32 = fnvConsistentHash("gou4che4ftwuEQzP6SsUR89gbY2", 100, FNVHashMode.FNV1A_32);
+    expect(index32).toEqual(39);
+    const index64 = fnvConsistentHash("gou4che4ftwuEQzP6SsUR89gbY2", 100, FNVHashMode.FNV1A_64);
+    expect(index64).toEqual(69);
   });
 });
