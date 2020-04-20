@@ -30,8 +30,18 @@ It is also possible to use a string as input, the hashing of the string into an 
 
     import { fnvConsistentHash, FNV1AHashMode } from 'jump-gouache';
         
-    const bucketIndex32 = fnvConsistentHash('Text that will be hashed with FNV-1a into a 32 bit integer', 100);
-    const bucketIndex64 = fnvConsistentHash('Text that will be hashed with FNV-1a into a 64 bit integer', 100, FNV1AHashMode.FNV1A_64);
+    const hash32Result = fnvConsistentHash(
+        'Text that will be hashed with FNV-1a into a 32 bit integer', 
+         100);
+    const bucket32 = hash32Result.bucket;
+    const hash32 = hash32Result.hash;
+    
+    const hash64Result = fnvConsistentHash(
+        'Text that will be hashed with FNV-1a into a 64 bit integer', 
+        100, 
+        FNV1AHashMode.FNV1A_64);
+    const bucket64 = hash64Result.bucket;
+    const hash64 = hash64Result.hash;
 
 The 32 bit mode is the default mode, it is way faster than the 64 bit one. It all depends if you want to use a wider range of hashed values from strings.
 Wider range means more unique hashed integer values and better distribution from jump consistent hash at the expense of more computation due to more 64 bit operations.
@@ -40,7 +50,11 @@ Another choice is to use MurmurHash3 thanks to `murmurhash3js`:
 
     import { murmurConsistentHash } from 'jump-gouache';
     
-    const index32 = murmurConsistentHash('Text that will be hashed with MurmurHash3 into a 32 bit integer', 100);
+    const hash32Result = murmurConsistentHash(
+        'Text that will be hashed with MurmurHash3 into a 32 bit integer', 
+        100);
+    const bucket32 = hash32Result.bucket;
+    const hash32 = hash32Result.hash;
 
 ## Compatibility & dependencies
 

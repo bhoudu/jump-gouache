@@ -62,6 +62,11 @@ export enum FNV1AHashMode {
   FNV1A_32, FNV1A_64
 }
 
+export interface StringHashResult<T> {
+  hash: T;
+  bucket: number;
+}
+
 /**
  * Jump consistent hash function based on a string input.
  * As jump algorithm requires a 32 or 64 bit long integer, the string input is hashed thanks to FNV1a.
@@ -70,21 +75,29 @@ export enum FNV1AHashMode {
  * @param input as a string
  * @param bucketCount as a positive integer to indicate how many buckets are valid to route inputs to
  * @param mode of FNV-1a to use (hash the input into a 32 bit or 64 bit value) before using jump algorithm
+ * @return computed hash and bucket
  */
 export function fnvConsistentHash(
   input: string,
   bucketCount: number,
   mode: FNV1AHashMode = FNV1AHashMode.FNV1A_32,
-): number {
+): StringHashResult<number | bigint> {
   switch (mode) {
     case FNV1AHashMode.FNV1A_64: {
       const input64: string = fnv.fast1a64(input);
-      return consistentHash(BigInt('0x' + input64), bucketCount);
+      const hash = BigInt('0x' + input64);
+      return {
+        bucket: consistentHash(hash, bucketCount),
+        hash,
+      };
     }
     case FNV1AHashMode.FNV1A_32:
     default: {
       const input32: number = fnv.fast1a32(input);
-      return consistentHash(input32, bucketCount);
+      return {
+        bucket: consistentHash(input32, bucketCount),
+        hash: input32,
+      };
     }
   }
 }
@@ -96,8 +109,12 @@ export function fnvConsistentHash(
  *
  * @param input as a string
  * @param bucketCount as a positive integer to indicate how many buckets are valid to route inputs to
+ * @return computed hash and bucket
  */
-export function murmurConsistentHash(input: string, bucketCount: number): number {
+export function murmurConsistentHash(input: string, bucketCount: number): StringHashResult<number> {
   const input32: number = murmurHash3.x86.hash32(input);
-  return consistentHash(input32, bucketCount);
+  return {
+    bucket: consistentHash(input32, bucketCount),
+    hash: input32,
+  };
 }
