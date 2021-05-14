@@ -1,6 +1,7 @@
-[![npm version](https://badge.fury.io/js/jump-gouache.svg)](https://badge.fury.io/js/jump-gouache) [![Build Status](https://travis-ci.com/bhoudu/jump-gouache.svg?branch=master)](https://travis-ci.com/bhoudu/jump-gouache)
-
 # Jump-Gouache
+[![npm version](https://badge.fury.io/js/jump-gouache.svg)](https://badge.fury.io/js/jump-gouache) [![Build Status](https://github.com/bhoudu/jump-gouache/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/bhoudu/jump-gouache/actions?query=branch%3Amaster)
+
+## Description
 
 This is a port of Guava consistent hash function in TypeScript alias the jump guava hash algorithm, in short `jump-gouache`.
 
@@ -16,14 +17,20 @@ This library produces the same outputs as many other libraries that implement th
 
 This library is made with compatibility in mind, all used algorithms are standard so it should work nicely in environments where there are lots of different tech stacks.
 
-## Usage
+## Basic usage with numeric values
 
-Just import the function and start hashing. The basic consistentHash function accepts `number` and `bigint` values.
+Install the dependency
+
+    yarn add jump-gouache
+
+Import the function and start hashing. The basic consistentHash function accepts `number` and `bigint` values.
 
     import { jump } from 'jump-gouache';
      
     const bucketIndexNumber = jump(45645664, 100);
     const bucketIndexBigInt = jump(BigInt('0xdeadbeef'), 100);
+
+## Hashing with strings
 
 It is also possible to use a string as input, the hashing of the string into an integer is made with `fnv-plus`.
 `FNV-1a` algorithm is very fast and designed for uniqueness.
