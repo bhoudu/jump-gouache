@@ -1,6 +1,6 @@
 import { fnvConsistentHash } from "./fnv1a";
 
-describe('hashingUtil', () => {
+describe('fnv1a', () => {
   it('Test jump consistent hash function with FNV1a', () => {
     const index32 = fnvConsistentHash('gou4che4ftwuEQzP6SsUR89gbY2', 100, 'FNV1A_32');
     expect(index32.bucket).toEqual(39);
