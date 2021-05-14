@@ -1,21 +1,23 @@
-name: Node.js Package
+name: Release
 on:
-  release:
-    types: [ created ]
+  push:
+    branches:
+    - master
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  release:
+    name: Release
+    runs-on: ubuntu-18.04
     steps:
-    - uses: actions/checkout@v2
-    # Setup .npmrc file to publish to npm
-    - uses: actions/setup-node@v2
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
-        registry-url: 'https://registry.npmjs.org'
-        # Defaults to the user or organization that owns the workflow file
-        scope: '@zenbeni'
+        node-version: 12
     - run: yarn install --frozen-lockfile
     - run: yarn build
-    - run: yarn publish
+    - name: Release
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npx semantic-release
