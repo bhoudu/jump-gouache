@@ -1,5 +1,6 @@
 # compiled output
 .cache
+lib
 dist
 node_modules
 

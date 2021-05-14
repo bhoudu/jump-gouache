@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "@typescript-eslint/indent": ["error", 2],
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "max-len": [2, 120, 2, {"ignoreComments": true}],
+    "no-constant-condition": ["error", {"checkLoops": false}],
+    "import/prefer-default-export": "off"
+  }
+}
