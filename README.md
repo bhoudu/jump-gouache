@@ -37,13 +37,13 @@ It is also possible to use a string as input, the hashing of the string into an 
 
     import { fnvConsistentHash } from 'jump-gouache';
         
-    const hash32Result = fnvConsistentHash(
+    const hash64Result = fnvConsistentHash(
         'Text that will be hashed with FNV-1a into a 64 bit integer', 
          100);
     const bucket64 = hash64Result.bucket;
     const hash64 = hash64Result.hash;
     
-    const hash64Result = fnvConsistentHash(
+    const hash32Result = fnvConsistentHash(
         'Text that will be hashed with FNV-1a into a 32 bit integer', 
         100, 
         'FNV1A_32');
