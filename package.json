@@ -30,7 +30,9 @@
     "build": "tsc -p tsconfig.build.json",
     "test": "cross-env NODE_ENV?=test TZ=UTC jest --colors --detectOpenHandles --forceExit --no-cache --runInBand",
     "lint": "eslint 'src/**/*.ts' --fix-dry-run",
-    "verify": "yarn audit --json | yarn-audit-html --fatal-exit-code --output reports/yarn-audit-report.html"
+    "verify": "yarn verify:json && yarn verify:html",
+    "verify:json": "yarn audit --json > reports/yarn-audit.json",
+    "verify:html": "cat reports/yarn-audit.json | yarn-audit-html --output reports/yarn-audit-report.html"
   },
   "main": "lib/gouache.js",
   "types": "lib/gouache.d.ts",
