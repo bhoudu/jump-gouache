@@ -1,13 +1,8 @@
 import fnv from 'fnv-plus';
-import { jump } from "./jump";
+import { StringHashResult } from "./StringHashResult";
+import { jump } from "../jump";
 
 export type FNV1AHashMode = 'FNV1A_64' | 'FNV1A_32';
-
-export interface StringHashResult<T> {
-  hash: T;
-  bucket: number;
-  bucketCount: number;
-}
 
 /**
  * Jump consistent hash function based on a string input.
