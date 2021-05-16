@@ -1,5 +1,5 @@
 # Jump-Gouache
-[![npm version](https://badge.fury.io/js/jump-gouache.svg)](https://badge.fury.io/js/jump-gouache) [![Build Status](https://github.com/bhoudu/jump-gouache/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/bhoudu/jump-gouache/actions?query=branch%3Amaster)
+[![npm version](https://badge.fury.io/js/jump-gouache.svg)](https://badge.fury.io/js/jump-gouache) [![Build Status](https://github.com/bhoudu/jump-gouache/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/bhoudu/jump-gouache/actions?query=branch%3Amaster) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bhoudu_jump-gouache&metric=alert_status)](https://sonarcloud.io/dashboard?id=bhoudu_jump-gouache)
 
 ## Description
 
