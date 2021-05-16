@@ -25,16 +25,12 @@ jobs:
     - run: yarn test
       env:
         NODE_ENV: test
-    - name: Archive code coverage results
+    - run: yarn verify
+    - name: Archive build reports
       uses: actions/upload-artifact@v2
       with:
         name: code-coverage-report
         path: reports
-    - name: Release plan
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: npx semantic-release --dry-run
     - name: define SONAR_VERSION env variable
       run: |
         echo "SONAR_VERSION=$(npx project-version)" >> $GITHUB_ENV
