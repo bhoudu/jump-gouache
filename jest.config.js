@@ -5,7 +5,7 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "ts-jest"
   },
-  testRegex: "(//.*|(\\.|/)(test|spec))\\.tsx?$",
+  testRegex: "(//.*|(\\.|/)(test|spec|steps))\\.tsx?$",
   moduleFileExtensions: [
     "ts",
     "tsx",
@@ -15,7 +15,7 @@ module.exports = {
     "node"
   ],
   modulePaths: [
-    '<rootDir>/dist'
+    '<rootDir>/lib'
   ],
   collectCoverage: true,
   coverageDirectory: 'reports',
