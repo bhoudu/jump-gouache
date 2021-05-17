@@ -3738,10 +3738,10 @@ jest-snapshot@^26.6.2:
     pretty-format "^26.6.2"
     semver "^7.3.2"
 
-jest-sonar-reporter@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/jest-sonar-reporter/-/jest-sonar-reporter-2.0.0.tgz#faa54a7d2af7198767ee246a82b78c576789cf08"
-  integrity sha512-ZervDCgEX5gdUbdtWsjdipLN3bKJwpxbvhkYNXTAYvAckCihobSLr9OT/IuyNIRT1EZMDDwR6DroWtrq+IL64w==
+jest-sonarcloud-reporter@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/jest-sonarcloud-reporter/-/jest-sonarcloud-reporter-1.0.1.tgz#622e0c68e846dec3a98851100f6c5b1457014264"
+  integrity sha512-tHhaVockAOQSb4AY1tbYNlqj60xzgsTaezxlhH2zQg5j3/2dswUp15I5U9vhRwK4kvsP/avDliLPOANxB2PyNQ==
   dependencies:
     xml "^1.0.1"
 
