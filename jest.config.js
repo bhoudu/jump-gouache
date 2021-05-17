@@ -22,9 +22,9 @@ module.exports = {
   coverageReporters: [
     'lcov',
   ],
-  testResultsProcessor: "jest-sonar-reporter",
   reporters: [
     "default",
+    "./node_modules/jest-sonarcloud-reporter",
     [
       "./node_modules/jest-html-reporter",
       {
