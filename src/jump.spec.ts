@@ -28,4 +28,11 @@ describe('jump', () => {
       expect(index).toEqual(test.expected);
     });
   });
+
+  it('Test bad bucketCount value', () => {
+    const index = jump(123, -1);
+    expect(index).toEqual(-1);
+    const indexNull = jump(123, null);
+    expect(indexNull).toEqual(-1);
+  });
 });

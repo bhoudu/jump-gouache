@@ -38,8 +38,8 @@ export function* lcg(seed: number | bigint): Generator<BigNumber> {
  * @return computed bucket index matched for given input
  */
 export function jump(input: number | bigint, bucketCount: number): number {
-  if (bucketCount < 1) {
-    throw new Error(`Buckets must be positive: ${bucketCount}`);
+  if (bucketCount === null || bucketCount < 1) {
+    return -1;
   }
   const generator = lcg(input);
   let candidate = new BigNumber(0);
@@ -47,6 +47,8 @@ export function jump(input: number | bigint, bucketCount: number): number {
   while (true) {
     const value = generator.next().value;
     next = candidate.plus(1).dividedBy(value).integerValue(BigNumber.ROUND_DOWN);
+
+    // Jump from bucket to bucket until we go out of range
     if (next.isPositive() && next.isLessThan(bucketCount)) {
       candidate = next;
     } else {
