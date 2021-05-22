@@ -5,7 +5,7 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "ts-jest"
   },
-  testRegex: "(//.*|(\\.|/)(test|spec))\\.tsx?$",
+  testRegex: "(//.*|(\\.|/)(test|spec|steps))\\.tsx?$",
   moduleFileExtensions: [
     "ts",
     "tsx",
@@ -15,16 +15,16 @@ module.exports = {
     "node"
   ],
   modulePaths: [
-    '<rootDir>/dist'
+    '<rootDir>/lib'
   ],
   collectCoverage: true,
   coverageDirectory: 'reports',
   coverageReporters: [
     'lcov',
   ],
-  testResultsProcessor: "jest-sonar-reporter",
   reporters: [
     "default",
+    "./node_modules/jest-sonarcloud-reporter",
     [
       "./node_modules/jest-html-reporter",
       {

@@ -1,20 +1,39 @@
-name: Node.js CI
-on: [ push ]
+name: Build & Test
+on:
+  push:
+    branches:
+    - develop
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 14.x ]
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 14
+    - uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
     - run: yarn install --frozen-lockfile
     - run: yarn lint
     - run: yarn build
     - run: yarn test
       env:
         NODE_ENV: test
+    - run: yarn verify
+    - uses: actions/upload-artifact@v2
+      with:
+        name: reports
+        path: reports
+    - name: define SONAR_VERSION env variable
+      run: |
+        echo "SONAR_VERSION=$(npx project-version)" >> $GITHUB_ENV
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectVersion=${{ env.SONAR_VERSION }}

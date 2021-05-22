@@ -1,11 +1,6 @@
 import murmurHash3 from 'murmurhash3js';
-import { jump } from "./jump";
-
-export interface StringHashResult<T> {
-  hash: T;
-  bucket: number;
-  bucketCount: number;
-}
+import { StringHashResult } from "./StringHashResult";
+import { jump } from "../jump";
 
 /**
  * Jump consistent hash function based on a string input.
