@@ -32,7 +32,8 @@
     "lint": "eslint 'src/**/*.ts' --fix-dry-run",
     "verify": "yarn verify:json && yarn verify:html",
     "verify:json": "yarn audit --json > reports/yarn-audit.json",
-    "verify:html": "cat reports/yarn-audit.json | yarn-audit-html --output reports/yarn-audit-report.html"
+    "verify:html": "cat reports/yarn-audit.json | yarn-audit-html --output reports/yarn-audit-report.html",
+    "release": "semantic-release"
   },
   "main": "lib/gouache.js",
   "types": "lib/gouache.d.ts",
@@ -66,7 +67,14 @@
     "rimraf": "^3.0.2",
     "typescript": "^4.2.4",
     "ts-jest": "^26.5.6",
-    "yarn-audit-html": "^3.0.0"
+    "yarn-audit-html": "^3.0.0",
+    "semantic-release": "^17.4.3",
+    "@semantic-release/npm": "^7.1.3",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.2.3",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/release-notes-generator": "^9.0.2"
   },
   "jestSonar": {
     "withRelativePaths": true,
