@@ -21,7 +21,7 @@ jobs:
     - run: yarn test
       env:
         NODE_ENV: test
-    - run: yarn verify
+    - run: yarn verify || true
     - uses: actions/upload-artifact@v2
       with:
         name: reports
