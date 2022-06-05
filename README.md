@@ -3,11 +3,11 @@
 
 ## Description
 
-This is a port of Guava consistent hash function in TypeScript alias the jump guava hash algorithm, in short `jump-gouache`.
+`jump-gouache` is a port of `Guava` consistent hash function in TypeScript, often called `jump algorithm` used in cluster / node / partition management.
 
-Jump-Gouache was created as there was no fully compatible library of this algorithm available for nodejs runtime.
+`jump-gouache` was created as there was no fully compatible library of this algorithm available for nodejs runtime.
 
-This aims at computing the same bucket index from a 32 bit or 64 bit integer and buckets as in Guava, thus using the same Linear Congruential Generator as in Guava with the same constants.
+This aims at computing the same bucket index from a 32 bit or 64 bit integer as in `Guava`, thus using the same Linear Congruential Generator as in Guava with the same constants.
 
 This library produces the same outputs as many other libraries that implement the jump consistent hash algorithm. For instance :
 - [Guava](https://github.com/google/guava) in Java (of course)
@@ -19,11 +19,11 @@ This library is made with compatibility in mind, all used algorithms are standar
 
 ## Basic usage with numeric values
 
-Install the dependency
+Install the dependency with yarn or npm
 
     yarn add jump-gouache
 
-Import the function and start hashing. The basic consistentHash function accepts `number` and `bigint` values.
+Import the function in your code and start hashing. The basic consistentHash function accepts `number` and `bigint` values.
 
     import { jump } from 'jump-gouache';
      
@@ -32,7 +32,7 @@ Import the function and start hashing. The basic consistentHash function accepts
 
 ## Hashing with strings
 
-It is also possible to use a string as input, the hashing of the string into an integer is made with `fnv-plus`.
+It is also possible to use a string as input, the hashing of the string into an integer is made with `fnv-plus` by default.
 `FNV-1a` algorithm is very fast and designed for great uniform distribution (not for security).
 
     import { fnvConsistentHash } from 'jump-gouache';
@@ -50,10 +50,10 @@ It is also possible to use a string as input, the hashing of the string into an 
     const bucket32 = hash32Result.bucket;
     const hash32 = hash32Result.hash;
 
-The 32 bit mode is available, it is way faster than the 64 bit one. It all depends if you want to use a wider range of hashed values from strings.
+The 32 bit mode is also available, it is way faster than the 64 bit one. It all depends if you want to use a wider range of hashed values from strings.
 Wider range means more unique hashed integer values and better distribution from jump consistent hash at the expense of more computation due to more 64 bit operations.
 
-Another popular choice is to use MurmurHash3 thanks to `murmurhash3js`. Although the algorithm is great, there is no available implementation for 64 bit, thus it is not possible to use the widest hash target range of the jump algorithm, some will consider it suboptimal, others will see it as more compatible with their actual hash functions.
+Another popular choice is to use `MurmurHash3` thanks to `murmurhash3js`. Although the algorithm is great, there is no available implementation for 64 bit, thus it is not possible to use the widest hash target range of the jump algorithm, some will consider it suboptimal, others will see it as a more compatible solution with their actual hash functions.
 
     import { murmurConsistentHash } from 'jump-gouache';
     
