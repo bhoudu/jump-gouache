@@ -2,19 +2,21 @@ name: Release
 on:
   push:
     branches:
-    - master
+      - master
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 14
-    - run: yarn install --frozen-lockfile
-    - run: yarn build
-    - run: yarn release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 #
+      - name: Release
+        if: github.ref == 'refs/heads/main'
+        uses: gembaadvantage/uplift-action@v2
+        with:
+          args: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
