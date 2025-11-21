@@ -19,6 +19,8 @@ jobs:
           .yarn/unplugged
           .yarn/install-state.gz
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - run: node -v
+    - run: npm install -g corepack
     - run: yarn set version stable
     - run: yarn install --immutable
     - run: yarn lint
