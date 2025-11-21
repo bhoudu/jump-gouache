@@ -7,10 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
-        node-version: 14
+        node-version: 24
     - uses: actions/cache@v4
       with:
         path: '**/node_modules'
@@ -22,7 +22,7 @@ jobs:
       env:
         NODE_ENV: test
     - run: yarn verify || true
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: reports
         path: reports
