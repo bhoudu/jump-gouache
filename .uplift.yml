@@ -3,3 +3,18 @@ bumps:
     json:
       - path: "version"
         semver: true
+
+release_notes:
+  enabled: true
+  file: RELEASE_NOTES.md
+  type: conventional
+
+git:
+  commit:
+    enabled: true
+    message: "chore(release): bump version to {version} [skip ci]"
+
+publish:
+  enabled: true
+  registry: https://registry.npmjs.org/
+  token: $NPM_TOKEN
