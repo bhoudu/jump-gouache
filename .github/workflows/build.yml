@@ -7,33 +7,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
-        node-version: 14
-    - uses: actions/cache@v2
+        node-version: 24
+    - uses: actions/cache@v4
       with:
-        path: '**/node_modules'
+        path: |
+          '**/node_modules'
+          .yarn/cache
+          .yarn/unplugged
+          .yarn/install-state.gz
         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: yarn install --frozen-lockfile
+    - run: node -v
+    - run: npm install -g corepack
+    - run: yarn set version stable
+    - run: yarn install --immutable
     - run: yarn lint
     - run: yarn build
     - run: yarn test
       env:
         NODE_ENV: test
-    - run: yarn verify || true
-    - uses: actions/upload-artifact@v2
+    - run: yarn verify:json
+    - uses: actions/upload-artifact@v4
       with:
         name: reports
         path: reports
     - name: define SONAR_VERSION env variable
       run: |
         echo "SONAR_VERSION=$(npx project-version)" >> $GITHUB_ENV
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v6
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         args: >
           -Dsonar.projectVersion=${{ env.SONAR_VERSION }}

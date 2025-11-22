@@ -1,8 +1,8 @@
-import fnv from 'fnv-plus';
-import { StringHashResult } from "./StringHashResult";
+import fnv from "fnv-plus";
 import { jump } from "../jump";
+import type { StringHashResult } from "./StringHashResult";
 
-export type FNV1AHashMode = 'FNV1A_64' | 'FNV1A_32';
+export type FNV1AHashMode = "FNV1A_64" | "FNV1A_32";
 
 /**
  * Jump consistent hash function based on a string input.
@@ -15,28 +15,28 @@ export type FNV1AHashMode = 'FNV1A_64' | 'FNV1A_32';
  * @return computed hash and bucket
  */
 export function fnvConsistentHash(
-  input: string,
-  bucketCount: number,
-  mode: FNV1AHashMode = 'FNV1A_64',
+	input: string,
+	bucketCount: number,
+	mode: FNV1AHashMode = "FNV1A_64",
 ): StringHashResult<number | bigint> {
-  switch (mode) {
-    case 'FNV1A_32': {
-      const input32: number = fnv.fast1a32(input);
-      return {
-        hash: input32,
-        bucket: jump(input32, bucketCount),
-        bucketCount,
-      };
-    }
-    case 'FNV1A_64':
-    default: {
-      const input64: string = fnv.fast1a64(input);
-      const hash = BigInt('0x' + input64);
-      return {
-        bucket: jump(hash, bucketCount),
-        hash,
-        bucketCount,
-      };
-    }
-  }
+	switch (mode) {
+		case "FNV1A_32": {
+			const input32: number = fnv.fast1a32(input);
+			return {
+				hash: input32,
+				bucket: jump(input32, bucketCount),
+				bucketCount,
+			};
+		}
+		case "FNV1A_64":
+		default: {
+			const input64: string = fnv.fast1a64(input);
+			const hash = BigInt("0x" + input64);
+			return {
+				bucket: jump(hash, bucketCount),
+				hash,
+				bucketCount,
+			};
+		}
+	}
 }

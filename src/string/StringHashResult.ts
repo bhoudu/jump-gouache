@@ -1,5 +1,5 @@
 export interface StringHashResult<T> {
-  hash: T;
-  bucket: number;
-  bucketCount: number;
+	hash: T;
+	bucket: number;
+	bucketCount: number;
 }

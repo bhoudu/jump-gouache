@@ -1,6 +1,6 @@
-import murmurHash3 from 'murmurhash3js';
-import { StringHashResult } from "./StringHashResult";
+import murmurHash3 from "murmurhash3js";
 import { jump } from "../jump";
+import type { StringHashResult } from "./StringHashResult";
 
 /**
  * Jump consistent hash function based on a string input.
@@ -11,11 +11,14 @@ import { jump } from "../jump";
  * @param bucketCount as a positive integer to indicate how many buckets are valid to route inputs to
  * @return computed hash and bucket
  */
-export function murmurConsistentHash(input: string, bucketCount: number): StringHashResult<number> {
-  const input32: number = murmurHash3.x86.hash32(input);
-  return {
-    hash: input32,
-    bucket: jump(input32, bucketCount),
-    bucketCount,
-  };
+export function murmurConsistentHash(
+	input: string,
+	bucketCount: number,
+): StringHashResult<number> {
+	const input32: number = murmurHash3.x86.hash32(input);
+	return {
+		hash: input32,
+		bucket: jump(input32, bucketCount),
+		bucketCount,
+	};
 }
