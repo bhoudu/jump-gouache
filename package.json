@@ -31,11 +31,10 @@
     "build": "tsc -p tsconfig.build.json",
     "test": "cross-env NODE_ENV=test TZ=UTC jest --colors --detectOpenHandles --forceExit --no-cache --runInBand",
     "lint": "biome lint ./src",
-    "verify": "yarn verify:mkdir && yarn:verify:clean && yarn verify:json && yarn verify:html",
-    "verify:mkdir": "mkdir -p reports && yarn verify:json && yarn verify:html",
+    "verify": "yarn verify:mkdir && yarn:verify:clean && yarn verify:json",
+    "verify:mkdir": "mkdir -p reports && yarn verify:json",
     "verify:clean": "rimraf reports/yarn-audit.json",
-    "verify:json": "yarn audit --json > reports/yarn-audit.json",
-    "verify:html": "cat reports/yarn-audit.json | yarn-audit-html --output reports/yarn-audit-report.html"
+    "verify:json": "yarn npm audit --json > reports/yarn-audit.json"
   },
   "main": "lib/gouache.js",
   "types": "lib/gouache.d.ts",
@@ -62,9 +61,7 @@
     "js-yaml": "^3.14.2",
     "rimraf": "^6.1.2",
     "ts-jest": "^29.4.5",
-    "typescript": "^5.9.3",
-    "yarn-audit-fix": "^9.3.1",
-    "yarn-audit-html": "^3.0.1"
+    "typescript": "^5.9.3"
   },
   "jestSonar": {
     "withRelativePaths": true,

@@ -28,7 +28,7 @@ jobs:
     - run: yarn test
       env:
         NODE_ENV: test
-    - run: yarn verify || true
+    - run: yarn verify:json
     - uses: actions/upload-artifact@v4
       with:
         name: reports
