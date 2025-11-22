@@ -1,8 +1,8 @@
 import BigNumber from "bignumber.js";
-import Long from 'long';
+import Long from "long";
 
-const lcgConstant = Long.fromString('2862933555777941757');
-const lcgDivisorConstant = new BigNumber('2147483648');
+const lcgConstant = Long.fromString("2862933555777941757");
+const lcgDivisorConstant = new BigNumber("2147483648");
 
 /**
  * Linear Congruential Generator to use for random floating number generation (PRNG).
@@ -17,12 +17,12 @@ const lcgDivisorConstant = new BigNumber('2147483648');
  * @return a random float value between 0 and 1
  */
 export function* lcg(seed: number | bigint): Generator<BigNumber> {
-  let state = Long.fromString(seed + '');
-  while (true) {
-    state = lcgConstant.mul(state).add(1);
-    const computedLong = state.shiftRightUnsigned(33).add(1);
-    yield new BigNumber(computedLong.low).dividedBy(lcgDivisorConstant);
-  }
+	let state = Long.fromString(seed + "");
+	while (true) {
+		state = lcgConstant.mul(state).add(1);
+		const computedLong = state.shiftRightUnsigned(33).add(1);
+		yield new BigNumber(computedLong.low).dividedBy(lcgDivisorConstant);
+	}
 }
 
 /**
@@ -38,21 +38,24 @@ export function* lcg(seed: number | bigint): Generator<BigNumber> {
  * @return computed bucket index matched for given input
  */
 export function jump(input: number | bigint, bucketCount: number): number {
-  if (bucketCount === null || bucketCount < 1) {
-    return -1;
-  }
-  const generator = lcg(input);
-  let candidate = new BigNumber(0);
-  let next = new BigNumber(-1);
-  while (true) {
-    const value = generator.next().value;
-    next = candidate.plus(1).dividedBy(value).integerValue(BigNumber.ROUND_DOWN);
+	if (bucketCount === null || bucketCount < 1) {
+		return -1;
+	}
+	const generator = lcg(input);
+	let candidate = new BigNumber(0);
+	let next = new BigNumber(-1);
+	while (true) {
+		const value = generator.next().value;
+		next = candidate
+			.plus(1)
+			.dividedBy(value)
+			.integerValue(BigNumber.ROUND_DOWN);
 
-    // Jump from bucket to bucket until we go out of range
-    if (next.isPositive() && next.isLessThan(bucketCount)) {
-      candidate = next;
-    } else {
-      return candidate.toNumber();
-    }
-  }
+		// Jump from bucket to bucket until we go out of range
+		if (next.isPositive() && next.isLessThan(bucketCount)) {
+			candidate = next;
+		} else {
+			return candidate.toNumber();
+		}
+	}
 }
