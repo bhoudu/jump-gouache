@@ -44,3 +44,5 @@ jobs:
       with:
         args: >
           -Dsonar.projectVersion=${{ env.SONAR_VERSION }}
+    - name: test release
+      run: uplift release --dry-run

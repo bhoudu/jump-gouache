@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 0 #
       - name: Release
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         uses: gembaadvantage/uplift-action@v2
         with:
           args: release

@@ -4,15 +4,22 @@ bumps:
       - path: "version"
         semver: true
 
+annotatedTags: true
+commitAuthor:
+  name: "Benjamin Houdu"
+  email: "benjamin.houdu@gmail.com"
+commitMessage: "chore(release): bump version to {version} [skip ci]"
+
+git:
+  pushOptions:
+    - option: ci.skip
+      skipBranch: true
+      skipTag: false
+
 release_notes:
   enabled: true
   file: RELEASE_NOTES.md
   type: conventional
-
-git:
-  commit:
-    enabled: true
-    message: "chore(release): bump version to {version} [skip ci]"
 
 publish:
   enabled: true
