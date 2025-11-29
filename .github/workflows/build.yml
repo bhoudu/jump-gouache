@@ -48,3 +48,7 @@ jobs:
       uses: gembaadvantage/uplift-action@v2
       with:
         args: release --dry-run
+    - name: test release
+      uses: gembaadvantage/uplift-action@v2
+      with:
+        args: tag --next --silent

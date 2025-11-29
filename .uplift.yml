@@ -10,18 +10,35 @@ commitAuthor:
   email: "benjamin.houdu@gmail.com"
 commitMessage: "chore(release): bump version to {version} [skip ci]"
 
-git:
-  pushOptions:
-    - option: ci.skip
-      skipBranch: true
-      skipTag: false
-
-release_notes:
-  enabled: true
-  file: RELEASE_NOTES.md
-  type: conventional
-
 publish:
   enabled: true
   registry: https://registry.npmjs.org/
   token: $NPM_TOKEN
+
+changelog:
+  sort: desc
+  exclude:
+    - '^chore\:*'
+  include:
+    - '^build\:*'
+    - '^ci\:*'
+    - '^docs\:*'
+    - '^feat\:*'
+    - '^feat\!\:*'
+    - '^feat\(*\)\:*'
+    - '^feat\(*\)\!\:*'
+    - '^fix\:*'
+    - '^fix\!\:*'
+    - '^fix\(*\)\:*'
+    - '^fix\(*\)\!\:*'
+    - '^perf\:*'
+    - '^refactor\:*'
+    - '^test\:*'
+
+git:
+  ignoreDetached: false
+  ignoreShallow: true
+  pushOptions:
+    - option: ci.skip
+      skipBranch: true
+      skipTag: false
