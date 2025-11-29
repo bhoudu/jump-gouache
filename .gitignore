@@ -1,5 +1,6 @@
 # compiled output
 .cache
+.yarn
 lib
 dist
 node_modules
@@ -16,6 +17,7 @@ lerna-debug.log*
 .DS_Store
 
 # Tests
+.scannerwork
 /coverage
 /reports
 /.nyc_output
