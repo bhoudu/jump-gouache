@@ -3302,7 +3302,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^3.13.1":
+"js-yaml@npm:^3.13.1, js-yaml@npm:^3.14.2":
   version: 3.14.2
   resolution: "js-yaml@npm:3.14.2"
   dependencies:
@@ -3372,6 +3372,7 @@ __metadata:
     jest: "npm:^29.7.0"
     jest-html-reporter: "npm:^4.3.0"
     jest-sonarcloud-reporter: "npm:^1.0.1"
+    js-yaml: "npm:^3.14.2"
     long: "npm:^5.3.2"
     murmurhash3js: "npm:^3.0.1"
     rimraf: "npm:^6.1.2"
