@@ -44,11 +44,3 @@ jobs:
       with:
         args: >
           -Dsonar.projectVersion=${{ env.SONAR_VERSION }}
-    - name: test release
-      uses: gembaadvantage/uplift-action@v2
-      with:
-        args: release --dry-run --no-push --skip-changelog
-    - name: show next tag
-      uses: gembaadvantage/uplift-action@v2
-      with:
-        args: tag --next --silent

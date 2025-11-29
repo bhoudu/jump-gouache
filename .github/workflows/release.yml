@@ -1,22 +1,28 @@
-name: Release
-on:
-  push:
-    branches:
-      - master
-jobs:
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 #
-      - name: Release
-        if: github.ref == 'refs/heads/master'
-        uses: gembaadvantage/uplift-action@v2
-        with:
-          args: release --no-push --skip-changelog
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+#name: Release
+#on:
+#  push:
+#    branches:
+#      - old
+#jobs:
+#
+#  release:
+#    name: Release
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0 #
+#      - uses: google-github-actions/release-please-action@v4
+#        id: release
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#          release-type: node
+#      - name: Release
+#        if: github.ref == 'refs/heads/master'
+#        uses: gembaadvantage/uplift-action@v2
+#        with:
+#          args: release --no-push --skip-changelog
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #
+#          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
