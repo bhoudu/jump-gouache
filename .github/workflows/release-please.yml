@@ -21,6 +21,7 @@ jobs:
         uses: google-github-actions/release-please-action@v4
         with:
           target-branch: master
+          primary-branch: develop
           release-type: node
 
       - name: Checkout
