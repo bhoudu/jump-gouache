@@ -14,16 +14,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          # This automatically handles caching for ~/.npm
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
 
       - name: Install dependencies
-        # --frozen-lockfile equivalent for npm is 'ci' (clean install)
         run: npm ci
 
-      - name: Run Biome (Lint & Format)
-        run: npx @biomejs/biome ci .
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        run: biome ci .
 
       - name: Build
         run: npm run build
@@ -39,7 +41,6 @@ jobs:
           path: reports
 
       - name: define SONAR_VERSION env variable
-        # npx works the same, but we ensure it uses the local version if available
         run: |
           echo "SONAR_VERSION=$(npx project-version)" >> $GITHUB_ENV
 
