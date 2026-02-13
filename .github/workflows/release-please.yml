@@ -3,12 +3,12 @@ name: Release Please
 on:
   push:
     branches:
-      - master
+      - develop
 
 permissions:
   contents: write
   pull-requests: write
-  id-token: write   # required for npm provenance
+  id-token: write
   packages: write
 
 jobs:
@@ -20,30 +20,32 @@ jobs:
         uses: google-github-actions/release-please-action@v4
         with:
           release-type: node
-          target-branch: master
+          target-branch: develop
 
-      # Only publish when a new release was created
       - name: Checkout
-        if: steps.release.outputs.release_created == 'true'
+        if: ${{ steps.release.outputs.release_created }}
         uses: actions/checkout@v4
 
       - name: Setup Node
-        if: steps.release.outputs.release_created == 'true'
+        if: ${{ steps.release.outputs.release_created }}
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
+          node-version: 24
+          registry-url: "https://registry.npmjs.org/"
+          cache: "npm"
 
       - name: Install dependencies
-        if: steps.release.outputs.release_created == 'true'
-        run: yarn install --frozen-lockfile
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm ci
 
       - name: Build
-        if: steps.release.outputs.release_created == 'true'
-        run: yarn build
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm run build
 
       - name: Publish to npm
-        if: steps.release.outputs.release_created == 'true'
+        if: ${{ steps.release.outputs.release_created }}
+        # We use -ws (workspaces) to publish all packages
+        # npm will skip packages that haven't changed versions
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

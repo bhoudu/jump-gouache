@@ -2,45 +2,56 @@ name: Build & Test
 on:
   push:
     branches:
-    - develop
+      - develop
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 24
-    - uses: actions/cache@v4
-      with:
-        path: |
-          '**/node_modules'
-          .yarn/cache
-          .yarn/unplugged
-          .yarn/install-state.gz
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: node -v
-    - run: npm install -g corepack
-    - run: yarn set version stable
-    - run: yarn install --immutable
-    - run: yarn lint
-    - run: yarn build
-    - run: yarn test
-      env:
-        NODE_ENV: test
-    - run: yarn verify:json
-    - uses: actions/upload-artifact@v4
-      with:
-        name: reports
-        path: reports
-    - name: define SONAR_VERSION env variable
-      run: |
-        echo "SONAR_VERSION=$(npx project-version)" >> $GITHUB_ENV
-    - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v6
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        args: >
-          -Dsonar.projectVersion=${{ env.SONAR_VERSION }}
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          # This automatically handles caching for ~/.npm
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: Install dependencies
+        # --frozen-lockfile equivalent for npm is 'ci' (clean install)
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint --workspaces --if-present
+
+      - name: Build
+        run: npm run build --workspaces --if-present
+
+      - name: Test
+        run: npm test --workspaces
+        env:
+          NODE_ENV: test
+
+      - name: Verify JSON
+        # Assuming this is a custom script in your root package.json
+        run: npm run verify:json --if-present
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: reports
+
+      - name: define SONAR_VERSION env variable
+        # npx works the same, but we ensure it uses the local version if available
+        run: |
+          echo "SONAR_VERSION=$(npx project-version)" >> $GITHUB_ENV
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectVersion=${{ env.SONAR_VERSION }}
