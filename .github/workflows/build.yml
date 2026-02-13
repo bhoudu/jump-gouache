@@ -4,6 +4,10 @@ on:
     branches:
       - develop
 
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -43,6 +47,17 @@ jobs:
       - name: define SONAR_VERSION env variable
         run: |
           echo "SONAR_VERSION=$(npx project-version)" >> $GITHUB_ENV
+
+      - name: Check if SONAR_TOKEN is set
+        run: |
+          if [ -z "$SONAR_TOKEN" ]; then
+            echo "SONAR_TOKEN is empty!"
+            exit 1
+          else
+            echo "SONAR_TOKEN is defined."
+          fi
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
