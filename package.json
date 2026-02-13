@@ -51,7 +51,7 @@
     "murmurhash3js": "^3.0.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.7",
+    "@biomejs/biome": "2.3.15",
     "@types/jest": "^29.5.14",
     "@types/node": "^24.10.1",
     "cross-env": "^10.1.0",
@@ -67,6 +67,5 @@
     "withRelativePaths": true,
     "reportPath": "reports",
     "reportFile": "test-report.xml"
-  },
-  "packageManager": "yarn@4.11.0"
+  }
 }
