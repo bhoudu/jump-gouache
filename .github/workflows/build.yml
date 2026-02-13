@@ -2,45 +2,68 @@ name: Build & Test
 on:
   push:
     branches:
-    - develop
+      - develop
+
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 24
-    - uses: actions/cache@v4
-      with:
-        path: |
-          '**/node_modules'
-          .yarn/cache
-          .yarn/unplugged
-          .yarn/install-state.gz
-        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-    - run: node -v
-    - run: npm install -g corepack
-    - run: yarn set version stable
-    - run: yarn install --immutable
-    - run: yarn lint
-    - run: yarn build
-    - run: yarn test
-      env:
-        NODE_ENV: test
-    - run: yarn verify:json
-    - uses: actions/upload-artifact@v4
-      with:
-        name: reports
-        path: reports
-    - name: define SONAR_VERSION env variable
-      run: |
-        echo "SONAR_VERSION=$(npx project-version)" >> $GITHUB_ENV
-    - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v6
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        args: >
-          -Dsonar.projectVersion=${{ env.SONAR_VERSION }}
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        run: biome ci ./src
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
+        env:
+          NODE_ENV: test
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: reports
+
+      - name: define SONAR_VERSION env variable
+        run: |
+          echo "SONAR_VERSION=$(npx project-version)" >> $GITHUB_ENV
+
+      - name: Check if SONAR_TOKEN is set
+        run: |
+          if [ -z "$SONAR_TOKEN" ]; then
+            echo "SONAR_TOKEN is empty!"
+            exit 1
+          else
+            echo "SONAR_TOKEN is defined."
+          fi
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectVersion=${{ env.SONAR_VERSION }}

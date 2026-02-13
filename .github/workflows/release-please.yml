@@ -8,7 +8,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  id-token: write   # required for npm provenance
+  id-token: write
   packages: write
 
 jobs:
@@ -19,31 +19,25 @@ jobs:
         id: release
         uses: google-github-actions/release-please-action@v4
         with:
-          release-type: node
-          target-branch: master
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
 
-      # Only publish when a new release was created
       - name: Checkout
-        if: steps.release.outputs.release_created == 'true'
+        if: ${{ steps.release.outputs.release_created }}
         uses: actions/checkout@v4
 
       - name: Setup Node
-        if: steps.release.outputs.release_created == 'true'
+        if: ${{ steps.release.outputs.release_created }}
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
+          node-version: 24
+          registry-url: "https://registry.npmjs.org/"
 
-      - name: Install dependencies
-        if: steps.release.outputs.release_created == 'true'
-        run: yarn install --frozen-lockfile
-
-      - name: Build
-        if: steps.release.outputs.release_created == 'true'
-        run: yarn build
-
-      - name: Publish to npm
-        if: steps.release.outputs.release_created == 'true'
-        run: npm publish --provenance --access public
+      - name: Install & Publish
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          npm ci
+          npm run build --if-present
+          npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -28,10 +28,9 @@ export function fnvConsistentHash(
 				bucketCount,
 			};
 		}
-		case "FNV1A_64":
 		default: {
 			const input64: string = fnv.fast1a64(input);
-			const hash = BigInt("0x" + input64);
+			const hash = BigInt(`0x${input64}`);
 			return {
 				bucket: jump(hash, bucketCount),
 				hash,

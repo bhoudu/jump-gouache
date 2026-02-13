@@ -16,10 +16,10 @@ describe("fnv1a", () => {
 			"FNV1A_64",
 		);
 		expect(index64.bucket).toEqual(69);
-		expect(index64.hash + "").toEqual("11786985376615240320");
+		expect(`${index64.hash}`).toEqual("11786985376615240320");
 
 		const indexDefault = fnvConsistentHash("gou4che4ftwuEQzP6SsUR89gbY2", 100);
 		expect(indexDefault.bucket).toEqual(69);
-		expect(indexDefault.hash + "").toEqual("11786985376615240320");
+		expect(`${indexDefault.hash}`).toEqual("11786985376615240320");
 	});
 });

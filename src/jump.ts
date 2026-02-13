@@ -17,7 +17,7 @@ const lcgDivisorConstant = new BigNumber("2147483648");
  * @return a random float value between 0 and 1
  */
 export function* lcg(seed: number | bigint): Generator<BigNumber> {
-	let state = Long.fromString(seed + "");
+	let state = Long.fromString(`${seed}`);
 	while (true) {
 		state = lcgConstant.mul(state).add(1);
 		const computedLong = state.shiftRightUnsigned(33).add(1);

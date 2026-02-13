@@ -1,6 +1,6 @@
 {
   "name": "jump-gouache",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "Port of Guava jump consistent hash function",
   "homepage": "https://github.com/bhoudu/jump-gouache",
   "bugs": "https://github.com/bhoudu/jump-gouache/issues",
@@ -31,10 +31,7 @@
     "build": "tsc -p tsconfig.build.json",
     "test": "cross-env NODE_ENV=test TZ=UTC jest --colors --detectOpenHandles --forceExit --no-cache --runInBand",
     "lint": "biome lint ./src",
-    "verify": "yarn verify:mkdir && yarn:verify:clean && yarn verify:json",
-    "verify:mkdir": "mkdir -p reports && yarn verify:json",
-    "verify:clean": "rimraf reports/yarn-audit.json",
-    "verify:json": "yarn npm audit --json > reports/yarn-audit.json"
+    "lint:fix": "biome lint --write ."
   },
   "main": "lib/gouache.js",
   "types": "lib/gouache.d.ts",
@@ -51,7 +48,7 @@
     "murmurhash3js": "^3.0.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.7",
+    "@biomejs/biome": "2.3.15",
     "@types/jest": "^29.5.14",
     "@types/node": "^24.10.1",
     "cross-env": "^10.1.0",
@@ -67,6 +64,5 @@
     "withRelativePaths": true,
     "reportPath": "reports",
     "reportFile": "test-report.xml"
-  },
-  "packageManager": "yarn@4.11.0"
+  }
 }
