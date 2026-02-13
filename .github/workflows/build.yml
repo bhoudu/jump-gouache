@@ -22,20 +22,16 @@ jobs:
         # --frozen-lockfile equivalent for npm is 'ci' (clean install)
         run: npm ci
 
-      - name: Lint
-        run: npm run lint --workspaces --if-present
+      - name: Run Biome (Lint & Format)
+        run: npx @biomejs/biome ci .
 
       - name: Build
-        run: npm run build --workspaces --if-present
+        run: npm run build
 
       - name: Test
-        run: npm test --workspaces
+        run: npm test
         env:
           NODE_ENV: test
-
-      - name: Verify JSON
-        # Assuming this is a custom script in your root package.json
-        run: npm run verify:json --if-present
 
       - uses: actions/upload-artifact@v4
         with:
