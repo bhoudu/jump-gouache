@@ -30,7 +30,8 @@
     "clean": "rimraf lib",
     "build": "tsc -p tsconfig.build.json",
     "test": "cross-env NODE_ENV=test TZ=UTC jest --colors --detectOpenHandles --forceExit --no-cache --runInBand",
-    "lint": "biome lint ./src"
+    "lint": "biome lint ./src",
+    "lint:fix": "biome lint --write ."
   },
   "main": "lib/gouache.js",
   "types": "lib/gouache.d.ts",
