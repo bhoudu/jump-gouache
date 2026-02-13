@@ -1,0 +1,10 @@
+{
+  "primary-branch": "develop",
+  "target-branch": "master",
+  "release-type": "node",
+  "packages": {
+    ".": {
+      "release-type": "node"
+    }
+  }
+}
